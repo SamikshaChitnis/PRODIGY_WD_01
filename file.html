@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <link rel="stylesheet" href="style.css">
+        
+    
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+
+    <title>Responsive Navigation Menu Bar</title>
+</head>
+<body>
+    <nav>
+        <div class="nav-bar">
+            <i class='bx bx-menu sidebarOpen'></i>
+            <span class="logo navLogo"><a href="#">TravelRide</a></span>
+
+            <div class="menu">
+                <div class="logo-toggle">
+                    <span class="logo"><a href="#">TravelRide</a></span>
+                    <i class='bx bx-x siderbarClose'></i>
+                </div>
+
+                <ul class="nav-links">
+                    <li><a href="#" data-section="home">Home</a></li>
+                    <li><a href="#" data-section="about">About</a></li>
+                    <li><a href="#" data-section="contact">Contact</a></li>
+                    <li><a href="#" data-section="services">Services</a></li>
+                    <li><a href="#" data-section="feedback">Feedback</a></li>
+                </ul>
+            </div>
+
+            <div class="darkLight-searchBox">
+                <div class="dark-light">
+                    <i class='bx bx-moon moon'></i>
+                    <i class='bx bx-sun sun'></i>
+                </div>
+
+                <div class="searchBox">
+                   <div class="searchToggle">
+                    <i class='bx bx-x cancel'></i>
+                    <i class='bx bx-search search'></i>
+                   </div>
+
+                    <div class="search-field">
+                        <input type="text" placeholder="Search...">
+                        <i class='bx bx-search'></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="sections">
+        <section id="home">
+            <h1>Welcome to TravelRide</h1>
+            <p>Your adventure starts here.</p>
+        </section>
+        <section id="about">
+            <h1>About Us</h1>
+            <p>Learn more about our journey.</p>
+        </section>
+        <section id="contact">
+            <h1>Contact Us</h1>
+            <p>Get in touch with us.</p>
+        </section>
+        <section id="services">
+            <h1>Our Services</h1>
+            <p>Discover what we offer.</p>
+        </section>
+        <section id="feedback">
+            <h1>Feedback</h1>
+            <p>We value your feedback.</p>
+        </section>
+    </div>
+
+<script>
+const body = document.querySelector("body"),
+      nav = document.querySelector("nav"),
+      modeToggle = document.querySelector(".dark-light"),
+      searchToggle = document.querySelector(".searchToggle"),
+      sidebarOpen = document.querySelector(".sidebarOpen"),
+      siderbarClose = document.querySelector(".siderbarClose"),
+      navLinks = document.querySelectorAll(".nav-links a"),
+      sections = document.querySelectorAll(".sections section");
+
+let getMode = localStorage.getItem("mode");
+if(getMode && getMode === "dark-mode"){
+    body.classList.add("dark");
+}
+
+
+modeToggle.addEventListener("click" , () =>{
+    modeToggle.classList.toggle("active");
+    body.classList.toggle("dark");
+
+    
+    if(!body.classList.contains("dark")){
+        localStorage.setItem("mode" , "light-mode");
+    }else{
+        localStorage.setItem("mode" , "dark-mode");
+    }
+});
+
+
+searchToggle.addEventListener("click" , () =>{
+    searchToggle.classList.toggle("active");
+});
+ 
+
+sidebarOpen.addEventListener("click" , () =>{
+    nav.classList.add("active");
+});
+
+body.addEventListener("click" , e =>{
+    let clickedElm = e.target;
+
+    if(!clickedElm.classList.contains("sidebarOpen") && !clickedElm.classList.contains("menu")){
+        nav.classList.remove("active");
+    }
+});
+
+
+navLinks.forEach(link => {
+    link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const sectionId = link.getAttribute("data-section");
+        sections.forEach(section => {
+            section.style.display = "none";
+        });
+        document.getElementById(sectionId).style.display = "block";
+    });
+});
+
+
+document.getElementById("home").style.display = "block";
+</script>
+</body>
+</html>
